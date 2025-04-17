@@ -10,7 +10,7 @@ import json
 import requests
 from urllib.parse import urlparse
 import numpy as np
-from langchain.embeddings import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
