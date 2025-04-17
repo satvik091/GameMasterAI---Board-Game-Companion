@@ -1,5 +1,3 @@
-# app.py - Main Streamlit application file
-
 import os
 import tempfile
 import streamlit as st
