@@ -18,8 +18,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 st.set_page_config(
     page_title="GameMaster AI - Board Game Companion",
     page_icon="🎲",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    layout="wide"
 )
 
 # Initialize session state variables
@@ -40,15 +39,7 @@ if "page_count" not in st.session_state:
 
 # Gemini API setup
 def initialize_genai():
-    api_key = st.secrets.get("GEMINI_API_KEY", os.environ.get("GEMINI_API_KEY"))
-    if not api_key:
-        api_key = st.text_input("Enter your Gemini API key:", type="password")
-        if not api_key:
-            st.warning("Please enter a valid Gemini API key.")
-            st.stop()
-        else:
-            # Store in session for this session only
-            os.environ["GEMINI_API_KEY"] = api_key
+    api_key = ("AIzaSyDJNmx7PKmb92aHcrwBK7L5IKHipNzjVck")
     
     genai.configure(api_key=api_key)
     
@@ -152,7 +143,7 @@ def create_vector_store(text):
         })
     
     # Create embeddings and vector store
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key="AIzaSyDJNmx7PKmb92aHcrwBK7L5IKHipNzjVck")
     
     # Create FAISS vector store
     vector_store = FAISS.from_texts(
@@ -361,15 +352,6 @@ def main_content():
             - 🧠 **Rule interpretations** - Clarify ambiguous rules
             """)
         
-        # Sample images for demonstration
-        st.subheader("Example: Upload a game manual to get started")
-        cols = st.columns(3)
-        with cols[0]:
-            st.image("https://m.media-amazon.com/images/I/71Tg9YTCkBL._AC_UF1000,1000_QL80_.jpg", width=200, caption="Catan", use_column_width=True)
-        with cols[1]:
-            st.image("https://m.media-amazon.com/images/I/71c2QA+YN9L._AC_UF1000,1000_QL80_.jpg", width=200, caption="Ticket to Ride", use_column_width=True)
-        with cols[2]:
-            st.image("https://m.media-amazon.com/images/I/71eJk7GtUOL._AC_UF1000,1000_QL80_.jpg", width=200, caption="Pandemic", use_column_width=True)
         
     else:
         # Chat interface
@@ -497,29 +479,26 @@ def main_content():
                 
                 # Player action
                 player_action = st.text_area("Describe your move or action:", 
-                                           placeholder="Example: I want to play the red card and take 2 resource tokens",
-                                           height=100)
+                                           placeholder="Example: I want to play the red card and take 2 resource tokens")
                 
-                col1, col2 = st.columns([1, 2])
-                with col1:
-                    if st.button("Submit Action", use_container_width=True):
-                        with st.spinner("Processing action..."):
-                            action_result = simulate_game_turn(
-                                st.session_state.current_game,
-                                player_action,
-                                st.session_state.game_simulation_state,
-                                text_model
-                            )
-                        
-                        st.markdown("### Action Result")
-                        st.markdown(action_result)
-                        
-                        # Update turn
-                        st.session_state.game_simulation_state["current_turn"] += 1
-                        
-                        # Add to chat history
-                        st.session_state.chat_history.append({"role": "user", "content": f"*Game simulation: {player_action}*"})
-                        st.session_state.chat_history.append({"role": "assistant", "content": action_result})
+                if st.button("Submit Action"):
+                    with st.spinner("Processing action..."):
+                        action_result = simulate_game_turn(
+                            st.session_state.current_game,
+                            player_action,
+                            st.session_state.game_simulation_state,
+                            text_model
+                        )
+                    
+                    st.markdown("### Action Result")
+                    st.markdown(action_result)
+                    
+                    # Update turn
+                    st.session_state.game_simulation_state["current_turn"] += 1
+                    
+                    # Add to chat history
+                    st.session_state.chat_history.append({"role": "user", "content": f"*Game simulation: {player_action}*"})
+                    st.session_state.chat_history.append({"role": "assistant", "content": action_result})
                 
                 # Common actions based on game
                 st.markdown("### Common Actions")
