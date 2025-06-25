@@ -143,7 +143,7 @@ def create_vector_store(text):
         })
     
     # Create embeddings and vector store
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key="AIzaSyDJNmx7PKmb92aHcrwBK7L5IKHipNzjVck")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key="AIzaSyBwgtrxT5tKuHymxOQ_im5IRFOoB7Qf3FA")
     
     # Create FAISS vector store
     vector_store = FAISS.from_texts(
