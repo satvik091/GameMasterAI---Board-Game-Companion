@@ -39,7 +39,7 @@ if "page_count" not in st.session_state:
 
 # Gemini API setup
 def initialize_genai():
-    api_key = ("AIzaSyDJNmx7PKmb92aHcrwBK7L5IKHipNzjVck")
+    api_key = ("AIzaSyCDHIJcDkcp5Rtta2XL30EFIIJnqO261hc")
     
     genai.configure(api_key=api_key)
     
