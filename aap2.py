@@ -39,7 +39,7 @@ if "page_count" not in st.session_state:
 
 # Gemini API setup
 def initialize_genai():
-    api_key = ("AIzaSyBwgtrxT5tKuHymxOQ_im5IRFOoB7Qf3FA")
+    api_key = ("AIzaSyBAhA7lwVu142Cz5l4mO2nudvJI7UUNv80")
     
     genai.configure(api_key=api_key)
     
@@ -143,7 +143,7 @@ def create_vector_store(text):
         })
     
     # Create embeddings and vector store
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key="AIzaSyBwgtrxT5tKuHymxOQ_im5IRFOoB7Qf3FA")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key="AIzaSyBAhA7lwVu142Cz5l4mO2nudvJI7UUNv80")
     
     # Create FAISS vector store
     vector_store = FAISS.from_texts(
